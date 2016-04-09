@@ -1,5 +1,5 @@
 class Hoge
   def aaaafadfae
-    p "hoafsfefafeaafa"
+    p "hoafsfafafeafefafeaafa"
   end
 end
