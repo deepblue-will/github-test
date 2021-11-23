@@ -49,7 +49,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: "Created by GHA",
-              body: "@deepblue-will Please check!!",
+              body: "@deepblue-will Please check!!"
             })
 
       - name: request reviewers
@@ -59,7 +59,7 @@ jobs:
             github.rest.pulls.requestReviewers({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: "${{steps.createPr.outputs.result.data.number}}"
+              pull_number: "${{steps.createPr.outputs.result.data.number}}",
               reviewers: ["deepblue-will"]
             })
 
