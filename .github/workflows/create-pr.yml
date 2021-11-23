@@ -43,7 +43,7 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            github.rest.pulls.create({
+            return github.rest.pulls.create({
               head: "${{steps.newbranch.outputs.created_branch}}",
               base: "master",
               owner: context.repo.owner,
@@ -51,7 +51,12 @@ jobs:
               title: "Created by GHA",
               body: "@deepblue-will Please check!!"
             })
-
+      
+      - name: check!
+        run: |
+          echo ${{steps.createPr.outputs.result}}
+          echo ${{steps.createPr.outputs.result.data.number}}
+      
       - name: request reviewers
         uses: actions/github-script@v5
         with:
