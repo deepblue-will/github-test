@@ -43,7 +43,7 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            const result = github.rest.pulls.create({
+            const result = await github.rest.pulls.create({
               head: "${{steps.newbranch.outputs.created_branch}}",
               base: "master",
               owner: context.repo.owner,
