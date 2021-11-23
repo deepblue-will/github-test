@@ -54,7 +54,7 @@ jobs:
       
       - name: check!
         run: |
-          echo ${{steps.createPr.outputs.result["data"]}}
+          echo ${{steps.createPr.outputs.result['data']}}
           echo ${{steps.createPr.outputs.result}}
       
       - name: request reviewers
@@ -64,7 +64,7 @@ jobs:
             github.rest.pulls.requestReviewers({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: "${{steps.createPr.outputs.result["data"]["number"]}}",
+              pull_number: "${{steps.createPr.outputs.result['data']['number']}}",
               reviewers: ["deepblue-will"]
             })
 
