@@ -1,0 +1,56 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on:
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: create dummy file
+        run: touch sample.txt
+
+
+      - name: git setting
+        run: |
+          git config --local user.email "deepblue.will@gmail.com"
+          git config --local user.name "deepblue-will"
+          
+      - name: create branch
+        id: newbranch
+        run: |-
+          BRANCH_NAME="sample-${{github.event.number}}"
+          git switch -c "${BRANCH_NAME}"
+          echo "::set-output name=created_branch::${BRANCH_NAME}"
+          
+      - name: Commit files
+        run: |
+          git add .
+          git commit -m "Add file" -a
+          git push origin ${{steps.newbranch.outputs.created_branch}}
+
+      - name: create pull request
+        id: createPr
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const result = github.rest.pulls.create({
+              head: "${{steps.newbranch.outputs.created_branch}}",
+              base: "master",
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: "Created by GHA",
+              body: "@deepblue-will Please check!!",
+            })
+            console.log(result)
+
+
